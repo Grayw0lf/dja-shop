@@ -2,7 +2,8 @@
 *~
 __pycache__
 python_shop_env
-media``
+/media
 db.sqlite3
 /static
 .DS_Store
+/.idea
