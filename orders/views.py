@@ -6,6 +6,7 @@ from django.template.loader import render_to_string
 from .models import OrderItem, Order
 from .forms import OrderCreateForm
 from cart.cart import Cart
+from .tasks import order_created
 #import weasyprint
 
 
@@ -36,6 +37,7 @@ def order_create(request):
                                          price=item['price'],
                                          quantity=item['quantity'])
             cart.clear()
+            order_created.delay(order.id)
             return render(request, 'orders/order/created.html', {'order': order})
     form = OrderCreateForm()
     return render(request, 'orders/order/create.html', {'cart': cart, 'form': form})
